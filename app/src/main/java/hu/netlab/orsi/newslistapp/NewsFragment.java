@@ -73,7 +73,7 @@ public class NewsFragment extends Fragment implements LoaderCallbacks<List<NewsI
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_news, container, false);
@@ -87,12 +87,21 @@ public class NewsFragment extends Fragment implements LoaderCallbacks<List<NewsI
         }
         MyRecyclerView.setLayoutManager(MyLayoutManager);
 
-        Button resfreshButton = view.findViewById(R.id.buttonRefresh);
+        Button buttonNext = view.findViewById(R.id.buttonNext);
 
-        resfreshButton.setOnClickListener(new View.OnClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initializeList();
+                ((NewsLoader) loaderManager.getLoader(LOADER_ID)).nextPage();
+            }
+        });
+
+        Button buttonPrev = view.findViewById(R.id.buttonPrev);
+
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NewsLoader) loaderManager.getLoader(LOADER_ID)).prevPage();
             }
         });
 
@@ -122,6 +131,7 @@ public class NewsFragment extends Fragment implements LoaderCallbacks<List<NewsI
                 }
             });
         }
+        MyRecyclerView.getAdapter().notifyDataSetChanged();
     }
 
     @Override
