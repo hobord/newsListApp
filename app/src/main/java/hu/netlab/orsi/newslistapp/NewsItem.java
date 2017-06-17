@@ -1,8 +1,11 @@
 package hu.netlab.orsi.newslistapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class NewsItem {
+public class NewsItem implements Parcelable {
 
     private String mTitle;
     private String mSectionName;
@@ -44,4 +47,36 @@ public class NewsItem {
         return mContentText;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // Parcelable
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mTitle);
+        parcel.writeString(mContentText);
+        parcel.writeString(mSectionName);
+        parcel.writeString(mThumbnail);
+        parcel.writeLong(this.mPublishedDate.getTime());
+    }
+
+    private NewsItem(Parcel in) {
+        mTitle = in.readString();
+        mContentText = in.readString();
+        mSectionName = in.readString();
+        mThumbnail = in.readString();
+        mPublishedDate = new Date(in.readLong());
+    }
+    public static final Parcelable.Creator<NewsItem> CREATOR
+            = new Parcelable.Creator<NewsItem>() {
+        public NewsItem createFromParcel(Parcel in) {
+            return new NewsItem(in);
+        }
+
+        public NewsItem[] newArray(int size) {
+            return new NewsItem[size];
+        }
+    };
 }

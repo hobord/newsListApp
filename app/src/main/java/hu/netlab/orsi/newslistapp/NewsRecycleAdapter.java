@@ -13,6 +13,10 @@ import com.squareup.picasso.Picasso;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class NewsRecycleAdapter extends RecyclerView.Adapter<NewsRecycleAdapter.NewsViewHolder> {
     private ArrayList<NewsItem> list;
@@ -72,22 +76,31 @@ public class NewsRecycleAdapter extends RecyclerView.Adapter<NewsRecycleAdapter.
 
     public class NewsViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView titleView;
-        public TextView sectionNameView;
-        public TextView publishedDateView;
+        //        public TextView titleView;
+        @BindView(R.id.title) TextView titleView;
+        @BindView(R.id.section_name) TextView sectionNameView;
+        @BindView(R.id.published_date) TextView publishedDateView;
+        @BindView(R.id.content_text) TextView contentTextView;
+        @BindView(R.id.image) ImageView thumbnailView;
+
+//        public TextView sectionNameView;
+//        public TextView publishedDateView;
+//        public String url;
+//        public TextView contentTextView;
+//        public ImageView thumbnailView;
+
         public String url;
-        public TextView contentTextView;
-        public ImageView thumbnailView;
+
 
         public NewsViewHolder(View v) {
             super(v);
+//            titleView = (TextView) v.findViewById(R.id.title);
+//            sectionNameView = (TextView) v.findViewById(R.id.section_name);
+//            publishedDateView = (TextView) v.findViewById(R.id.published_date);
+//            contentTextView = (TextView) v.findViewById(R.id.content_text);
+//            thumbnailView = (ImageView) v.findViewById(R.id.image);
+            ButterKnife.bind(this, v);
 
-            titleView = (TextView) v.findViewById(R.id.title);
-            sectionNameView = (TextView) v.findViewById(R.id.section_name);
-            publishedDateView = (TextView) v.findViewById(R.id.published_date);
-            contentTextView = (TextView) v.findViewById(R.id.content_text);
-
-            thumbnailView = (ImageView) v.findViewById(R.id.image);
 
         }
     }
